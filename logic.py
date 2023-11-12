@@ -68,9 +68,9 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.produce_label.clear()
         self.cost_label.clear()
         self.dollars_label.clear()
-        file = 'recipt'
+        file = 'receipt'
         now = date.today()
-        with open(file, 'w') as recipt:
-            recipt.write('-'*50)
-            recipt.write('\nThe Produce Shop\n')
-            recipt.write(f'Omaha, Nebraska | Date: {now} ')
+        with open(file, 'w') as receipt:
+            receipt.write('-'*50)
+            receipt.write('\nThe Produce Shop\n')
+            receipt.write(f'Omaha, Nebraska | Date: {now} ')
