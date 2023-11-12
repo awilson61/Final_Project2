@@ -35,7 +35,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
             pear_cost = float(self.convert_to_zero(self.pear_input.text().strip()))
             strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip()))
 
-            total = pear_cost + strawberries_cost
+            total = (pear_cost * 0.30) + (strawberries_cost * 0.40)
             self.total_label.setText('TOTAL')
             self.dollars_label.setText(f'${total:.2f}')
             self.exception_label.clear()
