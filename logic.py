@@ -30,12 +30,23 @@ class Logic(QMainWindow, Ui_ProduceShop):
         else:
             return text
 
+    def is_negative(self, text):
+        if text < 0:
+            return 0.0
+        else:
+            return text
+
     def submit(self):
         try:
             pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * (0.30)
             strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * (0.40)
 
+            pear_cost = self.is_negative(pear_cost)
+
             total = pear_cost + strawberries_cost
+            if total >= 50:
+                total -= 5
+
             self.total_label.setText('TOTAL:')
             self.produce_label.setText('Pears - \nStrawberries - \nPineapples - \nApples - \nBananas - \nWatermelons -')
             self.cost_label.setText(f'${pear_cost:.2f}\n${strawberries_cost:.2f}\n')
@@ -78,7 +89,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
                 receipt.write('\n{: ^50}\n'.format("The Produce Shop"))
                 receipt.write('\n{: ^50}\n'.format('6001 Dodge Street'))
                 receipt.write('{: ^50}\n'.format('Omaha, Nebraska'))
-                receipt.write('{: ^50}'.format(f'Date: {now}'))
+                receipt.write('{: ^50}\n'.format(f'Date: {now}'))
                 receipt.write('-' * 50)
                 receipt.write('\n{: ^50}'.format(f'Pears              ${pear_cost:.2f}'))
                 receipt.write('\n{: ^50}'.format(f'Strawberries       ${strawberries_cost:.2f}'))
