@@ -12,18 +12,9 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.receipt_button.clicked.connect(lambda: self.receipt_print())
 
     def clear(self):
-        self.exception_label.clear()
-        self.pear_input.clear()
-        self.strawberry_input.clear()
-        self.pineapple_input.clear()
-        self.apple_input.clear()
-        self.banana_input.clear()
-        self.watermelon_input.clear()
-        self.total_label.clear()
-        self.produce_label.clear()
-        self.cost_label.clear()
-        self.dollars_label.clear()
+        self.button_click_clear()
         self.receipt_label_printed.clear()
+        self.exception_label.clear()
 
     def convert_to_zero(self, text):
         if text == '':
@@ -37,11 +28,34 @@ class Logic(QMainWindow, Ui_ProduceShop):
         else:
             return text
 
+    def exception_handling(self):
+        self.exception_label.setText(
+            'Enter values that are numeric,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
+        self.button_click_clear()
+
+    def button_click_clear(self):
+        self.total_label.clear()
+        self.pear_input.clear()
+        self.strawberry_input.clear()
+        self.pineapple_input.clear()
+        self.apple_input.clear()
+        self.banana_input.clear()
+        self.watermelon_input.clear()
+        self.produce_label.clear()
+        self.cost_label.clear()
+        self.dollars_label.clear()
+        self.receipt_label_printed.clear()
+
     def submit(self):
         try:
             # Converting to a float
-            pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * (0.30)
-            strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * (0.40)
+            pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * 0.30
+            strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * 0.40
+            pineapples_cost = 0
+            apples_cost = 0
+            bananas_cost = 0
+            watermelons_cost = 0
+
             # Logic handling negatives values
             pear_cost = self.is_negative(pear_cost)
             strawberries_cost = self.is_negative(strawberries_cost)
@@ -49,33 +63,28 @@ class Logic(QMainWindow, Ui_ProduceShop):
             total = pear_cost + strawberries_cost
             if total >= 50:
                 total -= 5
+                self.cost_label.setText(
+                    f'${pear_cost:.2f}\n${strawberries_cost:.2f}\n${pineapples_cost:.2f}\n${apples_cost:.2f}\n${bananas_cost:.2f}\n${watermelons_cost:.2f}\n\n$-5.00')
+                self.produce_label.setText(
+                    'Pears\nStrawberries\nPineapples\nApples\nBananas\nWatermelons\n\nDiscount')
+            else:
+                self.cost_label.setText(
+                    f'${pear_cost:.2f}\n${strawberries_cost:.2f}\n${pineapples_cost:.2f}\n${apples_cost:.2f}\n${bananas_cost:.2f}\n${watermelons_cost:.2f}')
+                self.produce_label.setText(
+                    'Pears\nStrawberries\nPineapples\nApples\nBananas\nWatermelons')
             # Setting the GUI labels
             self.total_label.setText('TOTAL:')
-            self.produce_label.setText('Pears - \nStrawberries - \nPineapples - \nApples - \nBananas - \nWatermelons -')
-            self.cost_label.setText(f'${pear_cost:.2f}\n${strawberries_cost:.2f}\n')
             self.dollars_label.setText(f'${total:.2f}')
             self.exception_label.clear()
             self.receipt_label_printed.clear()
         except:
-            self.exception_label.setText(
-                'Enter values that are numeric,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
-            self.total_label.clear()
-            self.pear_input.clear()
-            self.strawberry_input.clear()
-            self.pineapple_input.clear()
-            self.apple_input.clear()
-            self.banana_input.clear()
-            self.watermelon_input.clear()
-            self.produce_label.clear()
-            self.cost_label.clear()
-            self.dollars_label.clear()
-            self.receipt_label_printed.clear()
+            self.exception_handling()
 
     def receipt_print(self):
         try:
             # Converting to a float
-            pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * (0.30)
-            strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * (0.40)
+            pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * 0.30
+            strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * 0.40
             # Logic handling negatives values
             pear_cost = self.is_negative(pear_cost)
             strawberries_cost = self.is_negative(strawberries_cost)
@@ -84,18 +93,9 @@ class Logic(QMainWindow, Ui_ProduceShop):
             if total >= 50:
                 total -= 5
             # Clearing all labels
+            self.button_click_clear()
             self.exception_label.clear()
-            self.pear_input.clear()
-            self.strawberry_input.clear()
-            self.pineapple_input.clear()
-            self.apple_input.clear()
-            self.banana_input.clear()
-            self.watermelon_input.clear()
-            self.total_label.clear()
-            self.produce_label.clear()
-            self.cost_label.clear()
-            self.dollars_label.clear()
-
+            # Receipt label
             self.receipt_label_printed.setText('Receipt Printed!\nThanks for shopping!')
 
             file = 'receipt'
@@ -111,16 +111,4 @@ class Logic(QMainWindow, Ui_ProduceShop):
                 receipt.write('\n{: ^50}'.format(f'Pears              ${pear_cost:.2f}'))
                 receipt.write('\n{: ^50}'.format(f'Strawberries       ${strawberries_cost:.2f}'))
         except:
-            self.exception_label.setText(
-                'Enter values that are numeric,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
-            self.total_label.clear()
-            self.pear_input.clear()
-            self.strawberry_input.clear()
-            self.pineapple_input.clear()
-            self.apple_input.clear()
-            self.banana_input.clear()
-            self.watermelon_input.clear()
-            self.produce_label.clear()
-            self.cost_label.clear()
-            self.dollars_label.clear()
-            self.receipt_label_printed.clear()
+            self.exception_handling()
