@@ -23,6 +23,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.produce_label.clear()
         self.cost_label.clear()
         self.dollars_label.clear()
+        self.receipt_label_printed.clear()
 
     def convert_to_zero(self, text):
         if text == '':
@@ -54,6 +55,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
             self.cost_label.setText(f'${pear_cost:.2f}\n${strawberries_cost:.2f}\n')
             self.dollars_label.setText(f'${total:.2f}')
             self.exception_label.clear()
+            self.receipt_label_printed.clear()
         except:
             self.exception_label.setText(
                 'Enter values that are numeric,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
@@ -67,6 +69,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
             self.produce_label.clear()
             self.cost_label.clear()
             self.dollars_label.clear()
+            self.receipt_label_printed.clear()
 
     def receipt_print(self):
         try:
@@ -93,6 +96,8 @@ class Logic(QMainWindow, Ui_ProduceShop):
             self.cost_label.clear()
             self.dollars_label.clear()
 
+            self.receipt_label_printed.setText('Receipt Printed!\nThanks for shopping!')
+
             file = 'receipt'
             now = date.today()
             # Writing the TXT file
@@ -118,3 +123,4 @@ class Logic(QMainWindow, Ui_ProduceShop):
             self.produce_label.clear()
             self.cost_label.clear()
             self.dollars_label.clear()
+            self.receipt_label_printed.clear()
