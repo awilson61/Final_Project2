@@ -51,6 +51,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
             # Converting to a float
             pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * 0.30
             strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * 0.40
+            # TODO Finish converting the fruits into floats
             pineapples_cost = 0
             apples_cost = 0
             bananas_cost = 0
@@ -59,6 +60,11 @@ class Logic(QMainWindow, Ui_ProduceShop):
             # Logic handling negatives values
             pear_cost = self.is_negative(pear_cost)
             strawberries_cost = self.is_negative(strawberries_cost)
+            # TODO Finish calling the is_negative function
+            pineapples_cost = 0
+            apples_cost = 0
+            bananas_cost = 0
+            watermelons_cost = 0
             # Cost calculations
             total = pear_cost + strawberries_cost
             if total >= 50:
@@ -110,5 +116,6 @@ class Logic(QMainWindow, Ui_ProduceShop):
                 receipt.write('-' * 50)
                 receipt.write('\n{: ^50}'.format(f'Pears              ${pear_cost:.2f}'))
                 receipt.write('\n{: ^50}'.format(f'Strawberries       ${strawberries_cost:.2f}'))
+                # TODO Finsh writing the receipt
         except:
             self.exception_handling()
