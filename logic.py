@@ -38,15 +38,17 @@ class Logic(QMainWindow, Ui_ProduceShop):
 
     def submit(self):
         try:
+            # Converting to a float
             pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * (0.30)
             strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * (0.40)
-
+            # Logic handling negatives values
             pear_cost = self.is_negative(pear_cost)
-
+            strawberries_cost = self.is_negative(strawberries_cost)
+            # Cost calculations
             total = pear_cost + strawberries_cost
             if total >= 50:
                 total -= 5
-
+            # Setting the GUI labels
             self.total_label.setText('TOTAL:')
             self.produce_label.setText('Pears - \nStrawberries - \nPineapples - \nApples - \nBananas - \nWatermelons -')
             self.cost_label.setText(f'${pear_cost:.2f}\n${strawberries_cost:.2f}\n')
@@ -68,8 +70,17 @@ class Logic(QMainWindow, Ui_ProduceShop):
 
     def receipt_print(self):
         try:
+            # Converting to a float
             pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * (0.30)
             strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * (0.40)
+            # Logic handling negatives values
+            pear_cost = self.is_negative(pear_cost)
+            strawberries_cost = self.is_negative(strawberries_cost)
+            # Cost calculations
+            total = pear_cost + strawberries_cost
+            if total >= 50:
+                total -= 5
+            # Clearing all labels
             self.exception_label.clear()
             self.pear_input.clear()
             self.strawberry_input.clear()
@@ -84,6 +95,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
 
             file = 'receipt'
             now = date.today()
+            # Writing the TXT file
             with open(file, 'w') as receipt:
                 receipt.write('-' * 50)
                 receipt.write('\n{: ^50}\n'.format("The Produce Shop"))
