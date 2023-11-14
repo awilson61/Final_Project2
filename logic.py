@@ -4,36 +4,58 @@ from datetime import date
 
 
 class Logic(QMainWindow, Ui_ProduceShop):
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        Function to initialize the object's attributes
+        """
         super().__init__()
         self.setupUi(self)
         self.clear_button.clicked.connect(lambda: self.clear())
         self.submit_button.clicked.connect(lambda: self.submit())
         self.receipt_button.clicked.connect(lambda: self.receipt_print())
 
-    def clear(self):
+    def clear(self) -> None:
+        """
+        This function clears all the labels in the GUI.
+        """
         self.button_click_clear()
         self.receipt_label_printed.clear()
         self.exception_label.clear()
 
-    def convert_to_zero(self, text):
+    def convert_to_zero(self, text) -> float:
+        """
+        This function will convert any blank input boxes to zero
+        :param text: The value from each fruit's input box.
+        :return: The amount of pounds of each fruit.
+        """
         if text == '':
             return 0.0
         else:
             return text
 
-    def is_negative(self, text):
+    def is_negative(self, text) -> float:
+        """
+        This function checks to see if there are any negative values and turns them into zero.
+        :param text: The value from each fruit's input box.
+        :return: The amount of pounds of each fruit.
+        """
         if text < 0:
             return 0.0
         else:
             return text
 
-    def exception_handling(self):
+    def exception_handling(self) -> None:
+        """
+        This function labels the GUI and clearing unnecessary labels when an exception occurs
+        """
         self.exception_label.setText(
             'Enter values that are numeric,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
         self.button_click_clear()
 
-    def button_click_clear(self):
+    def button_click_clear(self) -> None:
+        """
+        This function clears the labels in the GUI. Used to condense code
+        """
         self.total_label.clear()
         self.pear_input.clear()
         self.strawberry_input.clear()
@@ -46,7 +68,10 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.dollars_label.clear()
         self.receipt_label_printed.clear()
 
-    def submit(self):
+    def submit(self) -> None:
+        """
+        This function displays the total cost of all the produce.
+        """
         try:
             # Converting to a float
             pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * 0.30
@@ -86,7 +111,10 @@ class Logic(QMainWindow, Ui_ProduceShop):
         except:
             self.exception_handling()
 
-    def receipt_print(self):
+    def receipt_print(self) -> None:
+        """
+        This function prints a digital receipt into a text file.
+        """
         try:
             # Converting to a float
             pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * 0.30
