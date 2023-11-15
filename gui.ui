@@ -90,7 +90,7 @@
      <rect>
       <x>69</x>
       <y>10</y>
-      <width>381</width>
+      <width>401</width>
       <height>21</height>
      </rect>
     </property>
@@ -103,7 +103,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Welcome to the Produce Stand!</string>
+     <string>Welcome to the Produce Shop!</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -228,15 +228,15 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>69</x>
       <y>30</y>
-      <width>171</width>
+      <width>401</width>
       <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>11</pointsize>
      </font>
     </property>
     <property name="text">
