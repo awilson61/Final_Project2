@@ -533,12 +533,23 @@
      <x>0</x>
      <y>0</y>
      <width>540</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>pear_input</tabstop>
+  <tabstop>apple_input</tabstop>
+  <tabstop>strawberry_input</tabstop>
+  <tabstop>banana_input</tabstop>
+  <tabstop>pineapple_input</tabstop>
+  <tabstop>watermelon_input</tabstop>
+  <tabstop>submit_button</tabstop>
+  <tabstop>clear_button</tabstop>
+  <tabstop>receipt_button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

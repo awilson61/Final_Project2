@@ -181,7 +181,7 @@ class Ui_ProduceShop(object):
         self.receipt_label_printed.setObjectName("receipt_label_printed")
         ProduceShop.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=ProduceShop)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 540, 24))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 540, 21))
         self.menubar.setObjectName("menubar")
         ProduceShop.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(parent=ProduceShop)
@@ -190,6 +190,14 @@ class Ui_ProduceShop(object):
 
         self.retranslateUi(ProduceShop)
         QtCore.QMetaObject.connectSlotsByName(ProduceShop)
+        ProduceShop.setTabOrder(self.pear_input, self.apple_input)
+        ProduceShop.setTabOrder(self.apple_input, self.strawberry_input)
+        ProduceShop.setTabOrder(self.strawberry_input, self.banana_input)
+        ProduceShop.setTabOrder(self.banana_input, self.pineapple_input)
+        ProduceShop.setTabOrder(self.pineapple_input, self.watermelon_input)
+        ProduceShop.setTabOrder(self.watermelon_input, self.submit_button)
+        ProduceShop.setTabOrder(self.submit_button, self.clear_button)
+        ProduceShop.setTabOrder(self.clear_button, self.receipt_button)
 
     def retranslateUi(self, ProduceShop):
         _translate = QtCore.QCoreApplication.translate
