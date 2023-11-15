@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>510</width>
+    <width>540</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>510</width>
+    <width>540</width>
     <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>510</width>
+    <width>540</width>
     <height>600</height>
    </size>
   </property>
@@ -62,7 +62,7 @@
    <widget class="QPushButton" name="submit_button">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>40</x>
       <y>510</y>
       <width>151</width>
       <height>51</height>
@@ -75,7 +75,7 @@
    <widget class="QPushButton" name="clear_button">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>210</x>
       <y>510</y>
       <width>121</width>
       <height>51</height>
@@ -88,9 +88,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>139</x>
+      <x>69</x>
       <y>10</y>
-      <width>251</width>
+      <width>381</width>
       <height>21</height>
      </rect>
     </property>
@@ -104,6 +104,9 @@
     </property>
     <property name="text">
      <string>Welcome to the Produce Stand!</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="strawberries_image">
@@ -153,7 +156,7 @@
    <widget class="QLabel" name="watermelon_image">
     <property name="geometry">
      <rect>
-      <x>265</x>
+      <x>280</x>
       <y>230</y>
       <width>81</width>
       <height>81</height>
@@ -175,7 +178,7 @@
    <widget class="QLabel" name="apple_image">
     <property name="geometry">
      <rect>
-      <x>255</x>
+      <x>270</x>
       <y>60</y>
       <width>91</width>
       <height>71</height>
@@ -200,7 +203,7 @@
    <widget class="QLabel" name="banana_image">
     <property name="geometry">
      <rect>
-      <x>265</x>
+      <x>280</x>
       <y>130</y>
       <width>71</width>
       <height>91</height>
@@ -227,18 +230,26 @@
      <rect>
       <x>180</x>
       <y>30</y>
-      <width>161</width>
+      <width>171</width>
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Spend $50 get 5$ off!</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="produce_label">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>140</x>
       <y>320</y>
       <width>231</width>
       <height>161</height>
@@ -251,7 +262,7 @@
    <widget class="QLabel" name="total_label">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>140</x>
       <y>490</y>
       <width>60</width>
       <height>16</height>
@@ -264,7 +275,7 @@
    <widget class="QLabel" name="dollars_label">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>310</x>
       <y>490</y>
       <width>191</width>
       <height>16</height>
@@ -277,7 +288,7 @@
    <widget class="QLabel" name="cost_label">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>310</x>
       <y>320</y>
       <width>191</width>
       <height>161</height>
@@ -329,7 +340,7 @@
    <widget class="QLineEdit" name="watermelon_input">
     <property name="geometry">
      <rect>
-      <x>345</x>
+      <x>360</x>
       <y>260</y>
       <width>113</width>
       <height>21</height>
@@ -342,7 +353,7 @@
    <widget class="QLineEdit" name="banana_input">
     <property name="geometry">
      <rect>
-      <x>345</x>
+      <x>360</x>
       <y>170</y>
       <width>113</width>
       <height>21</height>
@@ -355,7 +366,7 @@
    <widget class="QLineEdit" name="apple_input">
     <property name="geometry">
      <rect>
-      <x>345</x>
+      <x>360</x>
       <y>90</y>
       <width>113</width>
       <height>21</height>
@@ -368,7 +379,7 @@
    <widget class="QLabel" name="exception_label">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>170</x>
       <y>330</y>
       <width>241</width>
       <height>161</height>
@@ -401,7 +412,7 @@
      <rect>
       <x>95</x>
       <y>150</y>
-      <width>151</width>
+      <width>171</width>
       <height>20</height>
      </rect>
     </property>
@@ -435,9 +446,9 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>345</x>
+      <x>360</x>
       <y>240</y>
-      <width>151</width>
+      <width>191</width>
       <height>20</height>
      </rect>
     </property>
@@ -453,9 +464,9 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>345</x>
+      <x>360</x>
       <y>150</y>
-      <width>151</width>
+      <width>181</width>
       <height>20</height>
      </rect>
     </property>
@@ -471,9 +482,9 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>345</x>
+      <x>360</x>
       <y>70</y>
-      <width>151</width>
+      <width>181</width>
       <height>20</height>
      </rect>
     </property>
@@ -489,7 +500,7 @@
    <widget class="QPushButton" name="receipt_button">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>350</x>
       <y>510</y>
       <width>151</width>
       <height>51</height>
@@ -502,7 +513,7 @@
    <widget class="QLabel" name="receipt_label_printed">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>200</x>
       <y>340</y>
       <width>161</width>
       <height>81</height>
@@ -521,7 +532,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>510</width>
+     <width>540</width>
      <height>24</height>
     </rect>
    </property>
