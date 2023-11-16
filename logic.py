@@ -22,34 +22,34 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.receipt_label_printed.clear()
         self.exception_label.clear()
 
-    def convert_to_zero(self, text) -> float:
+    def clean_input(self, text: str) -> float:
         """
-        This function will convert any blank input boxes to zero
-        :param text: The value from each fruit's input box.
-        :return: The amount of pounds of each fruit.
+        This ensures that the input is converted to a non-negative float or an exception is raised.
+        :param text: the value of each fruit's input box.
+        :return: A float representing the number of pounds to be purchased of a fruit.
         """
-        if text == '':
+        text = text.strip()
+        try:
+            match text:
+                case '':
+                    return 0.0
+                case _:
+                    if float(text) < 0:
+                        self.exception_handling()
+                        return 0.0
+                    else:
+                        return float(text)
+        except ValueError:
+            self.exception_handling()
             return 0.0
-        else:
-            return text
 
-    def is_negative(self, text) -> float:
-        """
-        This function checks to see if there are any negative values and turns them into zero.
-        :param text: The value from each fruit's input box.
-        :return: The amount of pounds of each fruit.
-        """
-        if text < 0:
-            return 0.0
-        else:
-            return text
 
     def exception_handling(self) -> None:
         """
         This function labels the GUI and clearing unnecessary labels when an exception occurs
         """
         self.exception_label.setText(
-            'Enter values that are numeric,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
+            'Only enter positive numbers,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
         self.button_click_clear()
 
     def button_click_clear(self) -> None:
@@ -72,26 +72,25 @@ class Logic(QMainWindow, Ui_ProduceShop):
         """
         This function displays the total cost of all the produce.
         """
+        cost_list = []
         try:
             # Converting to a float
-            pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * 0.30
-            strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * 0.40
-            # TODO Finish converting the fruits into floats
-            pineapples_cost = 0
-            apples_cost = 0
-            bananas_cost = 0
-            watermelons_cost = 0
+            pear_cost = self.clean_input(self.pear_input.text()) * 0.20
+            strawberries_cost = self.clean_input(self.strawberry_input.text()) * 0.40
+            pineapples_cost = self.clean_input(self.pineapple_input.text()) * 0.30
+            apples_cost = self.clean_input(self.apple_input.text()) * 0.10
+            bananas_cost = self.clean_input(self.banana_input.text()) * 0.08
+            watermelons_cost = self.clean_input(self.watermelon_input.text()) * 0.10
 
-            # Logic handling negatives values
-            pear_cost = self.is_negative(pear_cost)
-            strawberries_cost = self.is_negative(strawberries_cost)
-            # TODO Finish calling the is_negative function
-            pineapples_cost = 0
-            apples_cost = 0
-            bananas_cost = 0
-            watermelons_cost = 0
             # Cost calculations
-            total = pear_cost + strawberries_cost
+            cost_list.append(pear_cost)
+            cost_list.append(strawberries_cost)
+            cost_list.append(pineapples_cost)
+            cost_list.append(apples_cost)
+            cost_list.append(bananas_cost)
+            cost_list.append(watermelons_cost)
+            total = sum(cost_list)
+            # TODO Need to reformat the cost_label. I think we might need to come up with a different way to do this. We might be able to use lists and loops to only format and print prices as needed. Like, if the purchase amount is 0.0, then we could just not print it at all.
             if total >= 50:
                 total -= 5
                 self.cost_label.setText(
@@ -115,15 +114,23 @@ class Logic(QMainWindow, Ui_ProduceShop):
         """
         This function prints a digital receipt into a text file.
         """
+        cost_list = []
         try:
             # Converting to a float
-            pear_cost = float(self.convert_to_zero(self.pear_input.text().strip())) * 0.30
-            strawberries_cost = float(self.convert_to_zero(self.strawberry_input.text().strip())) * 0.40
-            # Logic handling negatives values
-            pear_cost = self.is_negative(pear_cost)
-            strawberries_cost = self.is_negative(strawberries_cost)
+            pear_cost = self.clean_input(self.pear_input.text()) * 0.20
+            strawberries_cost = self.clean_input(self.strawberry_input.text()) * 0.40
+            pineapples_cost = self.clean_input(self.pineapple_input.text()) * 0.30
+            apples_cost = self.clean_input(self.apple_input.text()) * 0.10
+            bananas_cost = self.clean_input(self.banana_input.text()) * 0.08
+            watermelons_cost = self.clean_input(self.watermelon_input.text()) * 0.10
+            cost_list.append(pear_cost)
+            cost_list.append(strawberries_cost)
+            cost_list.append(pineapples_cost)
+            cost_list.append(apples_cost)
+            cost_list.append(bananas_cost)
+            cost_list.append(watermelons_cost)
             # Cost calculations
-            total = pear_cost + strawberries_cost
+            total = sum(cost_list)
             if total >= 50:
                 total -= 5
             # Clearing all labels
@@ -142,8 +149,27 @@ class Logic(QMainWindow, Ui_ProduceShop):
                 receipt.write('{: ^50}\n'.format('Omaha, Nebraska'))
                 receipt.write('{: ^50}\n'.format(f'Date: {now}'))
                 receipt.write('-' * 50)
-                receipt.write('\n{: ^50}'.format(f'Pears              ${pear_cost:.2f}'))
-                receipt.write('\n{: ^50}'.format(f'Strawberries       ${strawberries_cost:.2f}'))
-                # TODO Finsh writing the receipt
+
+                # Format prices.
+                formatted_pear_cost = f'${pear_cost:,.2f}'
+                formatted_strawberries_cost = f'${strawberries_cost:,.2f}'
+                formatted_pear_cost = f'${pear_cost:,.2f}'
+                formatted_pear_cost = f'${pear_cost:,.2f}'
+                formatted_pear_cost = f'${pear_cost:,.2f}'
+                formatted_pear_cost = f'${pear_cost:,.2f}'
+                formatted_total = f'${total:,.2f}'
+
+                # Write to receipt.
+                receipt.write('\n{: ^50}'.format(f'Pears              {formatted_pear_cost: >15}'))
+                receipt.write('\n{: ^50}'.format(f'Strawberries       {formatted_strawberries_cost: >15}'))
+                receipt.write('\n{: ^50}'.format(f'Pineapples         ${pineapples_cost: >8,.2f}'))
+                receipt.write('\n{: ^50}'.format(f'Apples             ${apples_cost: >8,.2f}'))
+                receipt.write('\n{: ^50}'.format(f'Bananas            ${bananas_cost: >8,.2f}'))
+                receipt.write('\n{: ^50}'.format(f'Watermelons        ${watermelons_cost: >8,.2f}\n\n'))
+                receipt.write('\n{: ^50}'.format(f'TOTAL:             {formatted_total: >15}'))
+                # TODO Finish formatting the receipt. We could probably come up with a different way to print the prices so that we don't print fruits with 0.00.
         except:
             self.exception_handling()
+
+
+
