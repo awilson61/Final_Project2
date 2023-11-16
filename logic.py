@@ -13,6 +13,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.clear_button.clicked.connect(lambda: self.clear())
         self.submit_button.clicked.connect(lambda: self.submit())
         self.receipt_button.clicked.connect(lambda: self.receipt_print())
+        self.DISCOUNT = 50
 
     def clear(self) -> None:
         """
@@ -91,7 +92,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
             cost_list.append(watermelons_cost)
             total = sum(cost_list)
             # TODO Need to reformat the cost_label. I think we might need to come up with a different way to do this. We might be able to use lists and loops to only format and print prices as needed. Like, if the purchase amount is 0.0, then we could just not print it at all.
-            if total >= 50:
+            if total >= self.DISCOUNT:
                 total -= 5
                 self.cost_label.setText(
                     f'${pear_cost:.2f}\n${strawberries_cost:.2f}\n${pineapples_cost:.2f}\n${apples_cost:.2f}\n${bananas_cost:.2f}\n${watermelons_cost:.2f}\n\n$-5.00')
@@ -153,21 +154,27 @@ class Logic(QMainWindow, Ui_ProduceShop):
                 # Format prices.
                 formatted_pear_cost = f'${pear_cost:,.2f}'
                 formatted_strawberries_cost = f'${strawberries_cost:,.2f}'
-                formatted_pear_cost = f'${pear_cost:,.2f}'
-                formatted_pear_cost = f'${pear_cost:,.2f}'
-                formatted_pear_cost = f'${pear_cost:,.2f}'
-                formatted_pear_cost = f'${pear_cost:,.2f}'
+                formatted_pineapples_cost = f'${pineapples_cost:,.2f}'
+                formatted_apples_cost = f'${apples_cost:,.2f}'
+                formatted_bananas_cost = f'${bananas_cost:,.2f}'
+                formatted_watermelons_cost = f'${watermelons_cost:,.2f}'
                 formatted_total = f'${total:,.2f}'
 
                 # Write to receipt.
-                receipt.write('\n{: ^50}'.format(f'Pears              {formatted_pear_cost: >15}'))
-                receipt.write('\n{: ^50}'.format(f'Strawberries       {formatted_strawberries_cost: >15}'))
-                receipt.write('\n{: ^50}'.format(f'Pineapples         ${pineapples_cost: >8,.2f}'))
-                receipt.write('\n{: ^50}'.format(f'Apples             ${apples_cost: >8,.2f}'))
-                receipt.write('\n{: ^50}'.format(f'Bananas            ${bananas_cost: >8,.2f}'))
-                receipt.write('\n{: ^50}'.format(f'Watermelons        ${watermelons_cost: >8,.2f}\n\n'))
-                receipt.write('\n{: ^50}'.format(f'TOTAL:             {formatted_total: >15}'))
+                receipt.write('\n{: <20}{:>30}'.format(f'Pears', formatted_pear_cost))
+                receipt.write('\n{: <20}{:>30}'.format(f'Strawberries', formatted_strawberries_cost))
+                receipt.write('\n{: <20}{:>30}'.format(f'Pineapples', formatted_pineapples_cost))
+                receipt.write('\n{: <20}{:>30}'.format(f'Apples', formatted_apples_cost))
+                receipt.write('\n{: <20}{:>30}'.format(f'Bananas', formatted_bananas_cost))
+                receipt.write('\n{: <20}{:>30}\n'.format(f'Watermelons', formatted_watermelons_cost))
+                receipt.write('-' * 50)
+                if total >= self.DISCOUNT:
+                    receipt.write('\n{: <20}{:>30}\n'.format(f'Discount', '$-5.00'))
+                    receipt.write('-' * 50)
+                receipt.write('\n\n{: <20}{:>30}'.format(f'TOTAL:', formatted_total))
                 # TODO Finish formatting the receipt. We could probably come up with a different way to print the prices so that we don't print fruits with 0.00.
+                # I tried changing up the formatting I think the issue was centering it to the center.
+                # FIXME When you enter in a string an exception does pop up
         except:
             self.exception_handling()
 
