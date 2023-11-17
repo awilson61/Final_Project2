@@ -1,6 +1,10 @@
-from PyQt6.QtWidgets import *
+from PyQt6.QtCore import QSize, Qt, QObject, QEvent
+from PyQt6.QtGui import QKeySequence, QAction, QIcon, QShortcut
+from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QLabel
 from gui import *
 from datetime import date
+
+
 
 
 class Logic(QMainWindow, Ui_ProduceShop):
@@ -14,6 +18,11 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.submit_button.clicked.connect(lambda: self.submit())
         self.receipt_button.clicked.connect(lambda: self.receipt_print())
         self.DISCOUNT = 50
+
+        # This adds an event filter that permits keyboard shortcuts for clear, submit, and receipt_print functions.
+        event_filter = GlobalShortcutEventFilter(self)
+        QApplication.instance().installEventFilter(event_filter)
+
 
     def clear(self) -> None:
         """
@@ -168,5 +177,23 @@ class Logic(QMainWindow, Ui_ProduceShop):
         except:
             self.exception_handling()
 
+# This adds keyboard shortcuts.
+class GlobalShortcutEventFilter(QObject):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.Type.KeyPress:
+            if event.key() == Qt.Key.Key_C:
+                self.parent().clear()
+                return True
+            if event.key() == Qt.Key.Key_S:
+                self.parent().submit()
+                return True
+            if event.key() == Qt.Key.Key_R:
+                self.parent().receipt_print()
+                return True
+        return super().eventFilter(obj, event)
 
 
