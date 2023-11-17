@@ -1,6 +1,10 @@
-from PyQt6.QtWidgets import *
+from PyQt6.QtCore import QSize, Qt, QObject, QEvent
+from PyQt6.QtGui import QKeySequence, QAction, QIcon, QShortcut
+from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QLabel
 from gui import *
 from datetime import date
+
+
 
 
 class Logic(QMainWindow, Ui_ProduceShop):
@@ -15,6 +19,11 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.receipt_button.clicked.connect(lambda: self.receipt_print())
         self.DISCOUNT = 50
 
+        # This adds an event filter that permits keyboard shortcuts for clear, submit, and receipt_print functions.
+        event_filter = GlobalShortcutEventFilter(self)
+        QApplication.instance().installEventFilter(event_filter)
+
+
     def clear(self) -> None:
         """
         This function clears all the labels in the GUI.
@@ -23,26 +32,19 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.receipt_label_printed.clear()
         self.exception_label.clear()
 
-    def clean_input(self, text: str) -> float:
+    def clean_user_input(self, text: str) -> float:
         """
         This ensures that the input is converted to a non-negative float or an exception is raised.
         :param text: the value of each fruit's input box.
         :return: A float representing the number of pounds to be purchased of a fruit.
         """
-        text = text.strip()
-        try:
-            match text:
-                case '':
-                    return 0.0
-                case _:
-                    if float(text) < 0:
-                        self.exception_handling()
-                        return 0.0
-                    else:
-                        return float(text)
-        except ValueError:
-            self.exception_handling()
-            return 0.0
+        if text == '':
+            float_pounds = 0.0
+        else:
+            float_pounds = float(text)
+        if float_pounds < 0:
+            raise ValueError
+        return float_pounds
 
 
     def exception_handling(self) -> None:
@@ -52,6 +54,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.exception_label.setText(
             'Only enter positive numbers,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
         self.button_click_clear()
+
 
     def button_click_clear(self) -> None:
         """
@@ -76,12 +79,12 @@ class Logic(QMainWindow, Ui_ProduceShop):
         cost_list = []
         try:
             # Converting to a float
-            pear_cost = self.clean_input(self.pear_input.text()) * 0.20
-            strawberries_cost = self.clean_input(self.strawberry_input.text()) * 0.40
-            pineapples_cost = self.clean_input(self.pineapple_input.text()) * 0.30
-            apples_cost = self.clean_input(self.apple_input.text()) * 0.10
-            bananas_cost = self.clean_input(self.banana_input.text()) * 0.08
-            watermelons_cost = self.clean_input(self.watermelon_input.text()) * 0.10
+            pear_cost = self.clean_user_input(self.pear_input.text()) * 0.20
+            strawberries_cost = self.clean_user_input(self.strawberry_input.text()) * 0.40
+            pineapples_cost = self.clean_user_input(self.pineapple_input.text()) * 0.30
+            apples_cost = self.clean_user_input(self.apple_input.text()) * 0.10
+            bananas_cost = self.clean_user_input(self.banana_input.text()) * 0.08
+            watermelons_cost = self.clean_user_input(self.watermelon_input.text()) * 0.10
 
             # Cost calculations
             cost_list.append(pear_cost)
@@ -91,7 +94,6 @@ class Logic(QMainWindow, Ui_ProduceShop):
             cost_list.append(bananas_cost)
             cost_list.append(watermelons_cost)
             total = sum(cost_list)
-            # TODO Need to reformat the cost_label. I think we might need to come up with a different way to do this. We might be able to use lists and loops to only format and print prices as needed. Like, if the purchase amount is 0.0, then we could just not print it at all.
             if total >= self.DISCOUNT:
                 total -= 5
                 self.cost_label.setText(
@@ -108,7 +110,7 @@ class Logic(QMainWindow, Ui_ProduceShop):
             self.dollars_label.setText(f'${total:.2f}')
             self.exception_label.clear()
             self.receipt_label_printed.clear()
-        except:
+        except ValueError:
             self.exception_handling()
 
     def receipt_print(self) -> None:
@@ -118,12 +120,12 @@ class Logic(QMainWindow, Ui_ProduceShop):
         cost_list = []
         try:
             # Converting to a float
-            pear_cost = self.clean_input(self.pear_input.text()) * 0.20
-            strawberries_cost = self.clean_input(self.strawberry_input.text()) * 0.40
-            pineapples_cost = self.clean_input(self.pineapple_input.text()) * 0.30
-            apples_cost = self.clean_input(self.apple_input.text()) * 0.10
-            bananas_cost = self.clean_input(self.banana_input.text()) * 0.08
-            watermelons_cost = self.clean_input(self.watermelon_input.text()) * 0.10
+            pear_cost = self.clean_user_input(self.pear_input.text()) * 0.20
+            strawberries_cost = self.clean_user_input(self.strawberry_input.text()) * 0.40
+            pineapples_cost = self.clean_user_input(self.pineapple_input.text()) * 0.30
+            apples_cost = self.clean_user_input(self.apple_input.text()) * 0.10
+            bananas_cost = self.clean_user_input(self.banana_input.text()) * 0.08
+            watermelons_cost = self.clean_user_input(self.watermelon_input.text()) * 0.10
             cost_list.append(pear_cost)
             cost_list.append(strawberries_cost)
             cost_list.append(pineapples_cost)
@@ -172,11 +174,26 @@ class Logic(QMainWindow, Ui_ProduceShop):
                     receipt.write('\n{: <20}{:>30}\n'.format(f'Discount', '$-5.00'))
                     receipt.write('-' * 50)
                 receipt.write('\n\n{: <20}{:>30}'.format(f'TOTAL:', formatted_total))
-                # TODO Finish formatting the receipt. We could probably come up with a different way to print the prices so that we don't print fruits with 0.00.
-                # I tried changing up the formatting I think the issue was centering it to the center.
-                # FIXME When you enter in a string an exception does pop up
         except:
             self.exception_handling()
 
+# This adds keyboard shortcuts.
+class GlobalShortcutEventFilter(QObject):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.Type.KeyPress:
+            if event.key() == Qt.Key.Key_C:
+                self.parent().clear()
+                return True
+            if event.key() == Qt.Key.Key_S:
+                self.parent().submit()
+                return True
+            if event.key() == Qt.Key.Key_R:
+                self.parent().receipt_print()
+                return True
+        return super().eventFilter(obj, event)
 
 
