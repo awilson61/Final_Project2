@@ -5,8 +5,6 @@ from gui import *
 from datetime import date
 
 
-
-
 class Logic(QMainWindow, Ui_ProduceShop):
     def __init__(self) -> None:
         """
@@ -22,7 +20,6 @@ class Logic(QMainWindow, Ui_ProduceShop):
         # This adds an event filter that permits keyboard shortcuts for clear, submit, and receipt_print functions.
         event_filter = GlobalShortcutEventFilter(self)
         QApplication.instance().installEventFilter(event_filter)
-
 
     def clear(self) -> None:
         """
@@ -46,7 +43,6 @@ class Logic(QMainWindow, Ui_ProduceShop):
             raise ValueError
         return float_pounds
 
-
     def exception_handling(self) -> None:
         """
         This function labels the GUI and clearing unnecessary labels when an exception occurs
@@ -54,7 +50,6 @@ class Logic(QMainWindow, Ui_ProduceShop):
         self.exception_label.setText(
             'Only enter positive numbers,\n e.g. 4 or 5.25. Input only numerical\n values; do not include "lbs"')
         self.button_click_clear()
-
 
     def button_click_clear(self) -> None:
         """
@@ -177,11 +172,11 @@ class Logic(QMainWindow, Ui_ProduceShop):
         except:
             self.exception_handling()
 
+
 # This adds keyboard shortcuts.
 class GlobalShortcutEventFilter(QObject):
     def __init__(self, parent):
         super().__init__(parent)
-
 
     def eventFilter(self, obj, event):
         if event.type() == QEvent.Type.KeyPress:
@@ -195,5 +190,3 @@ class GlobalShortcutEventFilter(QObject):
                 self.parent().receipt_print()
                 return True
         return super().eventFilter(obj, event)
-
-
