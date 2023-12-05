@@ -56,12 +56,12 @@ class Logic(QMainWindow, Ui_ProduceShop):
         This function clears the labels in the GUI. Used to condense code
         """
         self.total_label.clear()
-        self.pear_input.clear()
-        self.strawberry_input.clear()
-        self.pineapple_input.clear()
-        self.apple_input.clear()
-        self.banana_input.clear()
-        self.watermelon_input.clear()
+        self.pear_input.setValue(0)
+        self.strawberry_input.setValue(0)
+        self.pineapple_input.setValue(0)
+        self.apple_input.setValue(0)
+        self.banana_input.setValue(0)
+        self.watermelon_input.setValue(0)
         self.produce_label.clear()
         self.cost_label.clear()
         self.dollars_label.clear()
